@@ -21,12 +21,12 @@ class Card():
     
     def get_rank_value(self):
         ranks = ["Ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King"]
-        if ranks[ranks.index(self.rank)] == "Jack" or "Queen" or "King":
+        if self.rank == "Jack" or "Queen" or "King":
             return 10
-        elif ranks[self.rank] == "Ace":
+        elif self.rank == "Ace":
             return 11
         else:
-            return ranks.index(self.rank) + 1
+            return int(self.rank)
     
     def get_suit(self):
         return self.suit
@@ -46,6 +46,7 @@ class Deck():
 
     def shuffle(self):
         random.shuffle(self.cards)
+        print("Deck shuffled.")
 
     def draw_card(self):
         if not self.cards:
@@ -53,12 +54,79 @@ class Deck():
             return None
         return self.cards.pop(0)
 
+class Hand():
+
+    def __init__(self):
+        self.cards = []
+        self.value = 0
+        self.aces = 0
+
+    def add_card(self, card):
+        self.cards.append(card)
+        self.value += card.get_rank_value()
+        if card.get_rank() == "Ace":
+            self.aces += 1
+        self.ace_value()
+
+    def ace_value(self):
+        while self.value > 21 and self.aces:
+            self.value -= 10
+            self.aces -= 1
+    
+    def display_hand(self):
+        return "value: " + str(self.value)
+
+def hit(deck, hand):
+    hand.add_card(deck.draw_card())
+
+def is_busted(hand):
+    return hand.value > 21
+    
+def compare_hands(player_hand, dealer_hand):
+    if player_hand.value > dealer_hand.value:
+        return "Player wins!"
+    elif player_hand.value < dealer_hand.value:
+        return "Dealer wins!"
+    else:
+        return "Tie!"
+
 def main():
-    card = Card("Ace", "Spades")
-    print(card.get_rank())
-    print(card.get_rank_value())
-    print(card.get_suit())
-    print(card.get_rank() + " of " + card.get_suit())
+    print("Welcome to BlackJack!")
+    deck = Deck()
+    deck.shuffle()
+    player_hand = Hand()
+    dealer_hand = Hand()
+    i = 0
+    while i <= 1:
+        player_hand.add_card(deck.draw_card())
+        dealer_hand.add_card(deck.draw_card())
+        i += 1
+    
+    while True:
+        action = input("Would you like to hit or stand? (h/s): ").lower()
+        if action == "h":
+            hit(deck, player_hand)
+            print(player_hand.display_hand())
+            if is_busted(player_hand):
+                print("Player busts! Dealer wins.")
+                return
+        elif action == "s":
+            break
+        else:
+            print("Invalid input, Please enter 'h' or 's'.")
+
+        
+    while dealer_hand.value < 17:
+        hit(deck, dealer_hand)
+        print(dealer_hand.display_hand())
+
+    if is_busted(dealer_hand):
+        print("Dealer busts! Player wins.")
+    else:
+        print(dealer_hand.display_hand())
+        result = compare_hands(player_hand, dealer_hand)
+        print(result)
+            
 
 if __name__ == "__main__":
     main()

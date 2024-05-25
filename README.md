@@ -1,8 +1,14 @@
 # ATCSIndProj
+
 This is my final project for the 2024 Advanced Topics in CS course at Polytechnic School
 
 Day 2: I am deciding between a couple of ideas that I want to do. I wanted to try to figure out how to create a card game such as blackjack or poker, or I could create a system that stores and measures data depending on certain circumstances. After deliberating between these two choices, I believe that the second idea was too basic in the idea, so I am deciding to create a blackjack game.
 
 Day 3: Today, I focused on developing a card and deck class for my independent project. I started by creating the Card class, which includes attributes for the card's rank and suit, along with methods to retrieve those values. Afterwards, I designed the Deck class, which creates a standard deck of 52 cards and puts the correct value on each card such as the named cards so that they conform with the rules of Blackjack. I also added a shuffling version in order to not have the cards in a chronological order. I have successfully implemented and tested these classes during class.
 
-Day 4:
+Day 4: Today, I focused on creating the Hand class, which is crucial for managing the cards each player holds during the game. The Hand class keeps track of the cards in a player's hand, the total value of the hand, and the number of aces. I implemented methods to add a card to the hand and adjust the value if the hand contains aces. This adjustment is necessary beacuse, in BlackJack, an ace can be worth either 1 or 11 points depending on which value keeps the hand's total value under 21. I also added a method to display the hand's current cards and value, which will be useful for providing feedback to the player. After writing these methods, I made sure to test the Hand class to make sure that it is able to handle different scenarios
+
+Day 5: Finally, I implemented the hit and stand scenarios for the game, which is the main idea of BlackJack. The hit action allows the player to draw another card from the deck to their hand, while the stand action ends the player's turn and moves onto the dealer. I created a function for hitting that adds a card to the player's hand and checks if the player has busted with the is_busted function. For standing, I simply used a break to move onto the dealer's turn. I then verified if these functions were working properly through tests from the main function.
+
+Things I would have liked to work on if I had more time: 
+If I was able to work on this project for longer, I would have liked to work on a couple of things such as a user interface and correctly displaying the player's hand. I believe that adding an intercace to this game would be an incredible achievemen t and would make this game a lot more interesting than it is currently. Also, for soem reason, as I kept testing ways to work on displaying the player's hand, I would keep receiving weird strings of text instead of the player's hand, so I decided on keeping it so that it only shows the total value of the player's hand.
